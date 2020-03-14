@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  #トップページ
+  # トップページ
   root 'static_pages#home'
   
   # home,help,aboutページ
