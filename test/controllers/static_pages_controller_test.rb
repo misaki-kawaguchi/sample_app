@@ -5,12 +5,11 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   
   # assert_select：特定のHTMLタグが存在するかどうかをテスト
   
-  
   # Homeページのテスト。
   # GETリクエストをhomeアクションに対して発行せよ。
   # そうすれば、リクエストに対するレスポンスは[成功]になるはず
   test "should get home" do
-    get static_pages_home_url
+    get root_path
     assert_response :success
     assert_select "title", "Ruby on Rails Tutorial Sample App"
   end
@@ -19,7 +18,7 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   # GETリクエストをhelpアクションに対して発行せよ。
   # そうすれば、リクエストに対するレスポンスは[成功]になるはず
   test "should get help" do
-    get static_pages_help_url
+    get help_path
     assert_response :success
     assert_select "title", "Help | Ruby on Rails Tutorial Sample App"
   end
@@ -28,9 +27,18 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
   # GETリクエストをaboutアクションに対して発行せよ。
   # そうすれば、リクエストに対するレスポンスは[成功]になるはず
   test "should get about" do
-    get static_pages_about_url
+    get about_path
     assert_response :success
     assert_select "title", "About | Ruby on Rails Tutorial Sample App"
+  end
+  
+  # Contactページのテスト。
+  # GETリクエストをcontactアクションに対して発行せよ。
+  # そうすれば、リクエストに対するレスポンスは[成功]になるはず
+  test "should get contact" do
+    get contact_path
+    assert_response :success
+    assert_select "title", "Contact | Ruby on Rails Tutorial Sample App"
   end
 
 end
