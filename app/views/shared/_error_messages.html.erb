@@ -1,0 +1,14 @@
+<!--オブジェクトが空の場合はtrue-->
+<% if @user.errors.any? %>
+<div id="error_explanation">
+  <div class="alert alert-danger">
+    <!--pluralize:2番目の引数の英単語を複数形に変更したものを返す-->
+    The form contains <%= pluralize(@user.errors.count, "error") %>
+  </div>
+  <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

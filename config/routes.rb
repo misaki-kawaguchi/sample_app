@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  
-  get 'users/new'
 
   # トップページ
   root 'static_pages#home'
@@ -12,4 +10,6 @@ Rails.application.routes.draw do
   
   #ユーザー登録
   get '/signup', to: 'users#new'
+  post '/signup', to: 'users#create'
+  resources :users
 end
