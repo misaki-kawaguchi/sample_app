@@ -8,4 +8,10 @@ class ActiveSupport::TestCase
   fixtures :all
   #テスト環境でもapplication_helper.rbを使えるようにする
   include ApplicationHelper
+  
+  #テストユーザーがログイン中の場合にtrueを返す
+  def is_logged_in?
+    # nilではない
+    !session[:user_id].nil?
+  end
 end

@@ -1,0 +1,34 @@
+class SessionsController < ApplicationController
+  
+  #ログイン・ログアウト用のコントローラー
+  
+  # /login(GET)
+  def new
+  end
+  
+  # /login(POST)
+  def create
+    #データベースからユーザーを取り出す（元々小文字で保存している）
+    user = User.find_by(email: params[:session][:email].downcase)
+    #メールアドレスを持つユーザーがデータベースに存在し、かつ入力されたパスワードがそのユーザーのパスワードである場合
+    #（ユーザーがデータベースにあり、かつ、認証に成功した場合にのみ）
+    if user && user.authenticate(params[:session][:password])
+      # sessions_helperに記載
+      log_in user
+      #ユーザーのプロフィールページにリダイレクト
+      redirect_to user
+    else
+      # 本当は正しくない
+      #レンダリングが終わっているページで特別にフラッシュメッセージを表示することができる（flash.now）
+      flash.now[:danger] = 'Invalid email/password combination'
+      # ログインページに戻る
+      render 'new'
+    end
+  end
+  
+  # /logout
+  def destroy
+    log_out
+    redirect_to root_url
+  end
+end

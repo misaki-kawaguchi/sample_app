@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   
+  #ユーザー登録用のコントローラー
+  
   # /users/
   def index 
   end
@@ -18,6 +20,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      #ユーザー登録した時にログインする
+      log_in(@user)
       # 保存に成功するとWelcome to the Sample App!と表示される
       flash[:success] = "Welcome to the Sample App!"
       # 保存に成功すると詳細ページにとぶ[redirect_to user_url(@user)]
