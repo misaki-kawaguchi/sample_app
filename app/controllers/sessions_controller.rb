@@ -17,8 +17,8 @@ class SessionsController < ApplicationController
       log_in user
       #チェックボックスの送信結果を処理する
       params[:session][:remember_me] == '1'? remember(user):forget(user)
-      #ユーザーのプロフィールページにリダイレクト
-      redirect_to user
+      #フレンドリーフォワーディング
+      redirect_back_or user
     else
       # 本当は正しくない
       #レンダリングが終わっているページで特別にフラッシュメッセージを表示することができる（flash.now）
