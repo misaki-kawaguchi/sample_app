@@ -15,6 +15,8 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # sessions_helperに記載
       log_in user
+      #チェックボックスの送信結果を処理する
+      params[:session][:remember_me] == '1'? remember(user):forget(user)
       #ユーザーのプロフィールページにリダイレクト
       redirect_to user
     else
@@ -28,7 +30,7 @@ class SessionsController < ApplicationController
   
   # /logout
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_url
   end
 end
