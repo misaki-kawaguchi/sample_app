@@ -11,10 +11,14 @@ Rails.application.routes.draw do
   #ユーザー登録(Usersコントローラー)
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
-  resources :users
   
   #ログイン・ログアウト(Sessionsコントローラー)
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  
+  resources :users
+  
+  #アカウント有効化
+  resources :account_activations, only: [:edit]
 end

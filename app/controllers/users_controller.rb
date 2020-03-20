@@ -7,12 +7,14 @@ class UsersController < ApplicationController
   
   # /users/
   def index 
-    @users = User.paginate(page: params[:page])
+    #有効なユーザーだけを表示する
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
   
   # /users/:id [user_path(user)]
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
   end
   
   # /users/new [new_user_path]
@@ -24,12 +26,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      #ユーザー登録した時にログインする
-      log_in(@user)
-      # 保存に成功するとWelcome to the Sample App!と表示される
-      flash[:success] = "Welcome to the Sample App!"
-      # 保存に成功すると詳細ページにとぶ[redirect_to user_url(@user)]
-      redirect_to @user
+      #アカウント有効化のためのメールを送る
+      @user.send_activation_email
+      #メールを送る時に"Please check your email to activate your account"と表示する
+      flash[:info] = "Please check your email to activate your account"
+      #トップページに戻る
+      redirect_to root_url
     else
       render 'new'
     end
