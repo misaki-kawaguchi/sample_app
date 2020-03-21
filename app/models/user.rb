@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  #マイクロポストは、その所有者 (ユーザー) と一緒に破棄される
+  has_many :microposts, dependent: :destroy
   #remember_tokenとactivation_token,reset_tokenを追加
   attr_accessor :remember_token, :activation_token, :reset_token
   # 保存する前に小文字に変換する（Foo@ExAMPle.Comとfoo@example.comを同一であると解釈する）
@@ -74,6 +76,12 @@ class User < ApplicationRecord
   # パスワード再設定の期限が切れている場合はtrueを返す
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+  
+  # 試作feedの定義
+  # 完全な実装は次章の「ユーザーをフォローする」を参照
+  def feed
+    Micropost.where("user_id = ?", id)
   end
   
   private
